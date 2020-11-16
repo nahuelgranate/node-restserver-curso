@@ -3,6 +3,7 @@ require('./config/config');
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
+const port = process.env.PORT;
 
 // create application/json parser
 const jsonParser = bodyParser.json();
@@ -28,6 +29,6 @@ app.put('/user/:id', (req, res) => {
     });
 })
 
-app.listen(process.env.PORT, () => {
-    console.log(`Escuchando puerto ${process.env.PORT}`);
+app.listen(port, () => {
+    console.log(`Escuchando puerto ${ port }`);
 })
