@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const uniqueValidator = require('mongoose-unique-validator');
 // const { delete } = require('../routes/user');
 
-let validrRole = {
+let validRole = {
     values: ['ADMIN_ROLE', 'USER_ROLE'],
     message: '{VALUE} is not valid'
 }
@@ -30,7 +30,7 @@ let userSchema = new Schema({
     role: {
         type: String,
         default: 'USER_ROLE',
-        enum: validrRole
+        enum: validRole
     },
     status: {
         type: Boolean,
