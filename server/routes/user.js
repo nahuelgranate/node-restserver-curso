@@ -4,6 +4,7 @@ const _ = require('underscore');
 const app = express();
 const bodyParser = require('body-parser');
 const User = require('../models/user');
+const { tokenVerification, adminRoleVerification } = require('../middlewares/authorization');
 
 // create application/json parser
 const jsonParser = bodyParser.json();
@@ -11,7 +12,7 @@ const jsonParser = bodyParser.json();
 // create application/x-www-form-urlencoded parser
 const urlencodedParser = bodyParser.urlencoded({ extended: false });
 
-app.get('/user', (req, res) => {
+app.get('/user', tokenVerification, (req, res) => {
 
     let from = req.query.from || 0;
     from = Number(from);
@@ -41,7 +42,7 @@ app.get('/user', (req, res) => {
         })
 });
 
-app.post('/user', urlencodedParser, (req, res) => {
+app.post('/user', [tokenVerification, adminRoleVerification], urlencodedParser, (req, res) => {
     let body = req.body;
 
     let user = new User({
@@ -67,7 +68,7 @@ app.post('/user', urlencodedParser, (req, res) => {
     })
 });
 
-app.put('/user/:id', jsonParser, (req, res) => {
+app.put('/user/:id', tokenVerification, jsonParser, (req, res) => {
 
     let id = req.params.id;
     let body = _.pick(req.body, ['name', 'email', 'img', 'role', 'status']);

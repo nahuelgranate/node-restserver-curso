@@ -1,8 +1,10 @@
-// const express = require('express');
-const app = require('./routes/user');
+const express = require('express');
+const app = express();
 const mongoose = require('mongoose');
 const port = process.env.PORT; //DOESN'T WORK!!!
 require('./config/config');
+
+app.use(require('./routes/index'));
 
 mongoose.connect(process.env.DATABASE, {
     useNewUrlParser: true,
